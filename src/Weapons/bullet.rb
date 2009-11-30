@@ -19,7 +19,6 @@ class Bullet
     
     # Dimensions
     @width, @height = 10, 10
-
   end
   
   def update
@@ -33,8 +32,8 @@ class Bullet
   
   def draw
     # Just draw a small quad.
-    @window.draw_quad(x-5, y-5, 0xffff0000, x+5, y-5, 0xffff0000, 
-      x-5, y+5, 0xffff0000, x+5, y+5, 0xffff0000, 0)
+    @window.draw_quad(x-@width/2, y-@height/2, 0xffff0000, x+@width/2, y-@height/2, 0xffff0000, 
+      x-@width/2, y+@height/2, 0xffff0000, x+@width/2, y+@height/2, 0xffff0000, 0)
   end
   
   # Does this bullet touch a guy in 'ennemies'?
@@ -54,7 +53,7 @@ class Bullet
   end
   
   def located_in_frame?
-      @y < FRAME_HEIGHT + 10 && @y > -10 && @x < FRAME_WIDTH + 10 && @x > -10
+      @y < FRAME_HEIGHT + @height && @y > -@height && @x < FRAME_WIDTH + @width && @x > -@width
   end
   
   # Return circular collision mask.
