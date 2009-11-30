@@ -22,7 +22,7 @@ include Config
 # Main window of the game.
 class GameWindow < Gosu::Window
   
-  attr_reader :ennemies, :player, :particles
+  attr_reader :ennemies, :player, :particles, :bonuses
   attr_accessor :bullets, :e_bullets
   
   def initialize
@@ -36,6 +36,7 @@ class GameWindow < Gosu::Window
     @bullets = []
     @e_bullets = []
     @ennemies = []
+    @bonuses = []
     @particles = []
     
     # Launch player
@@ -81,6 +82,7 @@ class GameWindow < Gosu::Window
     @bullets.reject! { |o| o.update == false }
     @e_bullets.reject! { |o| o.update == false }
     @ennemies.reject! { |e| e.update == false }
+    @bonuses.reject! { |b| b.update == false }
     @particles.reject! { |p| p.update == false }
     
     
@@ -107,6 +109,7 @@ class GameWindow < Gosu::Window
     @bullets.each { |o| o.draw }
     @e_bullets.each { |o| o.draw }
     @ennemies.each{|e| e.draw}
+    @bonuses.each{|b| b.draw}
     @particles.each{|p| p.draw}
     
     @player.draw

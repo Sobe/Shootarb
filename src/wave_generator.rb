@@ -6,6 +6,10 @@ require 'src/Ennemies/simple_shooter'
 require 'src/Ennemies/dummy_ennemy'
 require 'src/Ennemies/traj_shooter'
 require 'src/Ennemies/tracker_ennemy'
+
+require 'src/Weapons/life_bonus'
+require 'src/Weapons/dw_bonus'
+
 require 'src/trajectory'
 
 include Trajectory
@@ -22,7 +26,9 @@ class Wave_Generator
     # Time length of each level
     # TODO rationalize here
     @@Level_Number = 5
-    @@Levels_duration = [1, 30, 30, 30, 30, 50]
+    @@Levels_duration = [1, 60, 15, 15, 15, 50]
+    @pause_at_beg = 1
+    @bonus_given = false
   end
   
   # Method to be called in Window#update()
@@ -41,42 +47,57 @@ class Wave_Generator
     @current_level = level
     @update_method = "update_level_#{@current_level}"
     @level_beg_t = Time.now
+    @bonus_given = false
   end
   
   #
   # UPDATE METHODS
   #
   
-  # Nil method for border cases
+  # Nil method for border cases.
   def update_level_
   end
   
   def update_level_1
-    @window.ennemies.push(Dummy_Ennemy.new(@window, rand*FRAME_WIDTH, 0)) if rand(80) == 0
-    @window.ennemies.push(Tracker_Ennemy.new(@window, @window.player, rand*FRAME_WIDTH, 0)) if rand(80) == 0
+    if Time.now - @level_beg_t > @pause_at_beg
+      @window.ennemies.push(Dummy_Ennemy.new(@window, rand*FRAME_WIDTH, 0)) if rand(80) == 0
+      @window.ennemies.push(Tracker_Ennemy.new(@window, @window.player, rand*FRAME_WIDTH, 0)) if rand(80) == 0
+      if (rand(60) == 0 and not @bonus_given)
+        @window.bonuses.push(DW_Bonus.new(@window, @window.player, rand*FRAME_WIDTH, 0))
+        @bonus_given = true
+      end
+    end
   end
   
   def update_level_2
-    @window.ennemies.push(Simple_Shooter.new( @window, @window.player, rand*FRAME_WIDTH, 0)) if rand(80) == 0
-    @window.ennemies.push(Tracker_Ennemy.new(@window, @window.player, rand*FRAME_WIDTH, 0)) if rand(80) == 0
+    if Time.now - @level_beg_t > @pause_at_beg
+      @window.ennemies.push(Simple_Shooter.new( @window, @window.player, rand*FRAME_WIDTH, 0)) if rand(80) == 0
+      @window.ennemies.push(Tracker_Ennemy.new(@window, @window.player, rand*FRAME_WIDTH, 0)) if rand(80) == 0
+    end
   end
   
   def update_level_3
-    Dummies_Wave.new(@window) if rand(200) == 0
-    @window.ennemies.push(Tracker_Ennemy.new(@window, @window.player, rand*FRAME_WIDTH, 0)) if rand(80) == 0
+    if Time.now - @level_beg_t > @pause_at_beg
+      Dummies_Wave.new(@window) if rand(200) == 0
+      @window.ennemies.push(Tracker_Ennemy.new(@window, @window.player, rand*FRAME_WIDTH, 0)) if rand(80) == 0
+    end
   end
   
   def update_level_4
-    traj = method(:test_traj)
-    @window.ennemies.push(Traj_Shooter.new(@window, @window.player, rand*FRAME_WIDTH, rand(10), traj)) if rand(80) == 0
-    @window.ennemies.push(Tracker_Ennemy.new(@window, @window.player, rand*FRAME_WIDTH, 0)) if rand(80) == 0
+    if Time.now - @level_beg_t > @pause_at_beg
+      traj = method(:y_accel_traj)
+      @window.ennemies.push(Traj_Shooter.new(@window, @window.player, rand*FRAME_WIDTH, rand(10), traj)) if rand(80) == 0
+      @window.ennemies.push(Tracker_Ennemy.new(@window, @window.player, rand*FRAME_WIDTH, 0)) if rand(80) == 0
+    end
   end
   
   def update_level_5
-    update_level_1
-    update_level_2
-    update_level_3
-    update_level_4
+    if Time.now - @level_beg_t > @pause_at_beg
+      update_level_1
+      update_level_2
+      update_level_3
+      update_level_4
+    end
   end
   
 end

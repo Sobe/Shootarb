@@ -2,9 +2,10 @@
 
 require 'src/zorder'
 require 'src/config'
-require 'src/Weapons/bullet'
+
 require 'src/Weapons/standard_weapon'
 require 'src/Weapons/divergent_weapon'
+require 'src/Weapons/vibrant_weapon'
 
 include Config
 
@@ -20,18 +21,18 @@ class Player
     @window = window
     
     # Images
-    #@normal_image = Gosu::Image.new(@window, "media/Starfighter.bmp", false)
     @normal_image = Gosu::Image.new(@window, "media/Starfighter_with_collision_mask_V2.bmp", false)
+    # TODO Hey! I need an animation or something!
     @crash_image = Gosu::Image.new(@window, "media/Starfighter_crash.BMP", false)
     
     @status = :alive
     @x, @y = x, y
     @width, @height = 50, 50
     @score = 0
-    @lives = 10
+    @lives = 3
     @hp = 100
     @last_bullet_time = Time.now
-    @weapons = [Standard_Weapon.new(@window, self), Divergent_Weapon.new(@window, self)]
+    @weapons = [Standard_Weapon.new(@window, self), Vibrant_Weapon.new(@window, self)]
   end
 
   def move_left
@@ -94,6 +95,17 @@ class Player
   
   def is_alive?
     @status == :alive
+  end
+  
+  # Add one up.
+  def add_1_life
+    @lives += 1
+  end
+  
+  def add_weapon(weapon)
+    b = false
+    @weapons.each {|w| b = (w.class == weapon.class)? true : b}
+    @weapons << weapon  unless b
   end
   
 end
