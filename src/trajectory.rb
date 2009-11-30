@@ -11,14 +11,27 @@
 module Trajectory
   
   # Straight simply accelerating trajectory.
-  def test_traj(obj)
+  def y_accel_traj(obj)
     [0, obj.vy + 0.1]
   end
   
+  # Trajectory following player with a velocity of 1.
   def tracking_traj(obj)
     vx = (obj.player.x - obj.x) / pts_distance([obj.player.x, obj.player.y], [obj.x, obj.y])
     vy = (obj.player.y - obj.y) / pts_distance([obj.player.x, obj.player.y], [obj.x, obj.y])
     [vx, vy]
+  end
+  
+  # Bouncing on the borders trajectory with a velocity of 2 on each axis.
+  def bouncing_1_traj(obj)
+    vx = (obj.x < obj.width/2.0)? 2 : ((obj.x > FRAME_WIDTH - obj.width/2.0)? -2 : obj.vx)
+    vy = (obj.y < obj.height/2.0)? 2 : ((obj.y > FRAME_HEIGHT - obj.height/2.0)? -2 : obj.vy)
+    [vx, vy]
+  end
+  
+  # A bit randomized trajectory on X axis, constant 5 on Y axis.
+  def few_random_traj(obj)
+    [obj.vx + 2.0*rand - 1.0, 5]
   end
   
 end
