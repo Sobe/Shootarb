@@ -8,6 +8,7 @@ require 'glu'
 require 'src/config'
 require 'src/player'
 require 'src/wave_generator'
+require 'src/wave_generator_test'
 require 'src/Ennemies/dummy_ennemy'
 require 'src/Ennemies/simple_shooter'
 require 'src/Ennemies/traj_shooter'
@@ -25,7 +26,8 @@ class GameWindow < Gosu::Window
   attr_reader :ennemies, :player, :particles, :bonuses
   attr_accessor :bullets, :e_bullets
   
-  def initialize
+  # Play in Test Mode if testmode == true
+  def initialize(testmode)
     super(FRAME_WIDTH, FRAME_HEIGHT, false)
     self.caption = "Shoota"
     
@@ -43,7 +45,12 @@ class GameWindow < Gosu::Window
     @player = Player.new(self, 400, 500)
     
     # Create Waves generator
-    @w_generator = Wave_Generator.new self
+    if testmode
+      @w_generator = Wave_Generator_Test.new self
+    else
+      @w_generator = Wave_Generator.new self
+    end
+
     @finished = false
     
     # Fonts for textual elements

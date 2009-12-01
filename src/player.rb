@@ -32,7 +32,7 @@ class Player
     @lives = 3
     @hp = 100
     @last_bullet_time = Time.now
-    @weapons = [Standard_Weapon.new(@window, self), Vibrant_Weapon.new(@window, self)]
+    @weapons = [Standard_Weapon.new(@window, self)]
   end
 
   def move_left
@@ -105,7 +105,11 @@ class Player
   def add_weapon(weapon)
     b = false
     @weapons.each {|w| b = (w.class == weapon.class)? true : b}
-    @weapons << weapon  unless b
+    if b
+      @player.score += 1000
+    else
+      @weapons << weapon  unless b
+    end
   end
   
 end

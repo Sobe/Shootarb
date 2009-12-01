@@ -5,5 +5,8 @@ Dir.chdir($:.first)
 
 require 'src/gamewindow.rb'
 
-window = GameWindow.new
+# Patch for test mode
+test = ARGV.include? "test"
+
+window = GameWindow.new(test)
 window.show

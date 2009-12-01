@@ -16,7 +16,8 @@ require 'src/trajectory'
 include Trajectory
 
 # This class generate waves of ennemies.
-class Wave_Generator
+# /!\ WARNING: USED FOR TESTS ONLY
+class Wave_Generator_Test
   
   attr_reader :current_level
   
@@ -27,7 +28,7 @@ class Wave_Generator
     # Time length of each level
     # TODO rationalize here
     @@Level_Number = 5
-    @@Levels_duration = [1, 30, 30, 30, 30, 45]
+    @@Levels_duration = [1, 15, 15, 15, 15, 30]
     @pause_at_beg = 1
     @bonus_given = false
     
@@ -113,3 +114,4 @@ class Wave_Generator
   end
   
 end
+
