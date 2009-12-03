@@ -102,11 +102,13 @@ class Player
     @lives += 1
   end
   
+  # Add a weapon or get a points bonus if already has this one.
   def add_weapon(weapon)
     b = false
     @weapons.each {|w| b = (w.class == weapon.class)? true : b}
     if b
-      @player.score += 1000
+      # TODO Bug here: not always applied
+      @score += 1000
     else
       @weapons << weapon  unless b
     end

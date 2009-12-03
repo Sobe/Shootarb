@@ -20,7 +20,7 @@ class Dummy_Ennemy < Ennemy
     @vx = 0 
     @vy = 3
     
-    @image = Gosu::Image.new(@window, "media/DarkEnnemy.bmp", false)
+    @image = Gosu::Image.new(@window, "media/blue_dumb.png", false)
   end
   
 end

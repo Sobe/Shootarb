@@ -30,7 +30,7 @@ class Simple_Shooter < Ennemy
     @x += @vx
     @y += @vy
     
-    # Todo puts all these middle things of update in "actions[method1, method2...]"
+    # TODO puts all these middle things of update in "actions[method1, method2...]"
     if Time.now - @last_shoot > 1.3
       shoot()
       @last_shoot = Time.now
