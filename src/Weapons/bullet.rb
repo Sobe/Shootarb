@@ -7,7 +7,7 @@ include Config
 
 # Player's bullet.
 class Bullet
-  attr_reader :x, :y, :vx, :vy
+  attr_reader :x, :y, :vx, :vy, :width, :height
   
   def initialize(window, player, x, y, vx=0, vy=7)
     @window, @x, @y = window, x + vx, y + vy

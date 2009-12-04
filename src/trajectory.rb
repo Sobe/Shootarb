@@ -34,4 +34,27 @@ module Trajectory
     [obj.vx + 2.0*rand - 1.0, 5]
   end
   
+  # Dodging trajectory
+  def dodge_traj(obj)
+    vx = 0
+    # Dodge bullets
+    obj.window.bullets.each do |b|
+      if (obj.x - obj.width/2 - b.width/2 .. obj.x).include? b.x
+        vx = 1
+        # TODO break or something here
+      elsif (obj.x .. obj.x + obj.width/2 + b.width/2).include? b.x
+        vx = -1
+        # TODO break or something here
+      end
+    end
+    # Keep obj in frame
+    if obj.x < obj.width/2
+      vx = vx.abs
+    elsif obj.x > FRAME_WIDTH - obj.width/2
+      vx = -vx.abs
+    end
+      
+    [vx, (obj.y > 100)? 0 : 1]
+  end
+  
 end

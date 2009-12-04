@@ -7,7 +7,7 @@ include Config
 
 # Abstract class for an ennemy.
 class Ennemy
-  attr_reader :x, :y, :vx, :vy, :score_pts, :width, :height
+  attr_reader :x, :y, :vx, :vy, :score_pts, :width, :height, :window
   
   def initialize(window, x, y)
     # Parent window and position

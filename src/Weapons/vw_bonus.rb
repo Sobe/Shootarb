@@ -13,9 +13,7 @@ class VW_Bonus < Bonus
     super(window, player, x, y, trajectory)
     @vx = [2,-2][rand(2)]
     @vy = [2,-2][rand(2)]
-    unless @@image
-      @@image = Gosu::Image.new(@window, "media/vw_bonus.bmp", false)
-    end
+    @image = Gosu::Image.new(@window, "media/vw_bonus.bmp", false)
   end
   
   # Give radiant weapon to the player.

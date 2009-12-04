@@ -30,6 +30,7 @@ class GameWindow < Gosu::Window
   def initialize(testmode)
     super(FRAME_WIDTH, FRAME_HEIGHT, false)
     self.caption = "Shoota"
+    @state = :in_game
     
     #@gl_background = GLBackground.new(self)
     #@background_image = Gosu::Image.new(self, "media/Space.png", true)
@@ -42,7 +43,7 @@ class GameWindow < Gosu::Window
     @particles = []
     
     # Launch player
-    @player = Player.new(self, 400, 500)
+    @player = Player.new(self, FRAME_WIDTH/2, 3.0/4.0*FRAME_HEIGHT)
     
     # Create Waves generator
     if testmode
@@ -68,35 +69,42 @@ class GameWindow < Gosu::Window
 
   # Override standard <b>update()</b> method.
   def update
-    # Update player
-    # TODO externalize this part PlayerCtrl
-    if @player.status == :alive
-      @player.move_left if button_down? Gosu::Button::KbLeft or button_down? Gosu::Button::GpLeft
-      @player.move_right if button_down? Gosu::Button::KbRight or button_down? Gosu::Button::GpRight
-      @player.accelerate if button_down? Gosu::Button::KbUp or button_down? Gosu::Button::GpUp
-      @player.brake if button_down? Gosu::Button::KbDown or button_down? Gosu::Button::GpDown
-      @player.shoot if button_down? Gosu::Button::KbZ or button_down? Gosu::GpButton0
+    
+    # 'P' for pause
+    if button_down? Gosu::Button::KbP
+      @state = (@state == :paused)? :in_game : :paused
     end
-    @player.update
     
-    # Check touching bullets
-    @bullets.reject! { |b| b.touch? @ennemies }
-    @e_bullets.reject! { |b| b.touch? @player }
+    unless @state == :paused
+      # Update player
+      # TODO externalize this part PlayerCtrl
+      if @player.status == :alive
+        @player.move_left if button_down? Gosu::Button::KbLeft or button_down? Gosu::Button::GpLeft
+        @player.move_right if button_down? Gosu::Button::KbRight or button_down? Gosu::Button::GpRight
+        @player.accelerate if button_down? Gosu::Button::KbUp or button_down? Gosu::Button::GpUp
+        @player.brake if button_down? Gosu::Button::KbDown or button_down? Gosu::Button::GpDown
+        @player.shoot if button_down? Gosu::Button::KbZ or button_down? Gosu::GpButton0
+      end
+      @player.update
+      
+      # Check touching bullets
+      @bullets.reject! { |b| b.touch? @ennemies }
+      @e_bullets.reject! { |b| b.touch? @player }
+      
+      # Update bullets and ennemies
+      # Remove all objects whose update method returns false. 
+      @bullets.reject! { |o| o.update == false }
+      @e_bullets.reject! { |o| o.update == false }
+      @ennemies.reject! { |e| e.update == false }
+      @bonuses.reject! { |b| b.update == false }
+      @particles.reject! { |p| p.update == false }
+      
+      #@gl_background.scroll
+      
+      # Generate new ennemies
+      @finished = @w_generator.update
+    end
     
-    
-    # Update bullets and ennemies
-    # Remove all objects whose update method returns false. 
-    @bullets.reject! { |o| o.update == false }
-    @e_bullets.reject! { |o| o.update == false }
-    @ennemies.reject! { |e| e.update == false }
-    @bonuses.reject! { |b| b.update == false }
-    @particles.reject! { |p| p.update == false }
-    
-    
-    #@gl_background.scroll
-    
-    # Generate new ennemies
-    @finished = @w_generator.update
   end
 
   # Override standard <b>draw()</b> method.
@@ -129,7 +137,11 @@ class GameWindow < Gosu::Window
     # Current level
     @font.draw("LEVEL: #{@w_generator.current_level}", 10, 50, ZOrder::UI, 1.0, 1.0, 0xffff0000)
     
-    # Game Over Label
+    # Pause label
+    if @state == :paused
+      @big_font.draw("  PAUSE  ", @GAME_OVER_X, @GAME_OVER_Y, ZOrder::UI, 1.0, 1.0, 0xffff0000)
+    end
+    # Game Over label
     if @player.lives < 0
       @big_font.draw("GAME OVER", @GAME_OVER_X, @GAME_OVER_Y, ZOrder::UI, 1.0, 1.0, 0xffff0000)
     end

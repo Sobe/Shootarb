@@ -9,8 +9,6 @@ class Bonus
   
   attr_reader :x, :y, :vx, :vy, :width, :height
   
-  @@image = nil
-  
   def initialize(window, player, x, y, trajectory)
     @window, @player = window, player
     @x, @y = x, y
@@ -46,7 +44,7 @@ class Bonus
   
   # Standard <b>draw()</b> method.
   def draw
-    @@image.draw(@x - @@image.width / 2, @y - @@image.height / 2, ZOrder::Player)
+    @image.draw(@x - @image.width / 2, @y - @image.height / 2, ZOrder::Player)
   end
   
   # Indicates if this bonus is still in the game frame.

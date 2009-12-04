@@ -29,8 +29,11 @@
 - Crash particles:
   -- Less
   -- Different colors according to the type of ennemy
+  -- Limit life of a particle in time
 - Scrolling background
   -- OpenGL or not needed?
   -- Background elements
 - BUG Score not added when add_weapon() on player (bad access to @score ?)
 - Make PAUSE possible (no update if paused => will make bugs with local timers)
+  -- Enhance button sensibility
+  -- Make a 'clock' class and use it whenever a timer is needed instead of Time.now

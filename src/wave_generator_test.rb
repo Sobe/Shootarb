@@ -28,7 +28,7 @@ class Wave_Generator_Test
     # Time length of each level
     # TODO rationalize here
     @@Level_Number = 5
-    @@Levels_duration = [1, 15, 15, 15, 15, 30]
+    @@Levels_duration = [1, 600, 15, 15, 15, 30]
     @pause_at_beg = 1
     @bonus_given = false
     
@@ -72,9 +72,12 @@ class Wave_Generator_Test
   
   def update_level_1
     if Time.now - @level_beg_t > @pause_at_beg
-      @window.ennemies.push(Dummy_Ennemy.new(@window, rand*FRAME_WIDTH, 0)) if rand(80) == 0
-      @window.ennemies.push(Tracker_Ennemy.new(@window, @window.player, rand*FRAME_WIDTH, 0)) if rand(80) == 0
-      give_bonus
+      #@window.ennemies.push(Dummy_Ennemy.new(@window, rand*FRAME_WIDTH, 0)) if rand(80) == 0
+      #@window.ennemies.push(Tracker_Ennemy.new(@window, @window.player, rand*FRAME_WIDTH, 0)) if rand(80) == 0
+      if @window.ennemies.size == 0
+        @window.ennemies.push(Traj_Shooter.new(@window, @window.player, rand*FRAME_WIDTH, rand(10), method(:dodge_traj))) #if rand(80) == 0
+      end
+      #give_bonus
     end
   end
   

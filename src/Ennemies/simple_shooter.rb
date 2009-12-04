@@ -20,7 +20,7 @@ class Simple_Shooter < Ennemy
     
     @player = player
     
-    @image = Gosu::Image.new(@window, "media/RedEnnemy.bmp", false)
+    @image = Gosu::Image.new(@window, "media/RedEnnemy.png", false)
     
     # Shoot timer
     @last_shoot = Time.now
