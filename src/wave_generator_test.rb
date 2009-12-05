@@ -6,6 +6,7 @@ require 'src/Ennemies/simple_shooter'
 require 'src/Ennemies/dummy_ennemy'
 require 'src/Ennemies/traj_shooter'
 require 'src/Ennemies/tracker_ennemy'
+require 'src/Ennemies/dodger_ennemy'
 
 require 'src/Weapons/life_bonus'
 require 'src/Weapons/dw_bonus'
@@ -75,7 +76,7 @@ class Wave_Generator_Test
       #@window.ennemies.push(Dummy_Ennemy.new(@window, rand*FRAME_WIDTH, 0)) if rand(80) == 0
       #@window.ennemies.push(Tracker_Ennemy.new(@window, @window.player, rand*FRAME_WIDTH, 0)) if rand(80) == 0
       if @window.ennemies.size == 0
-        @window.ennemies.push(Traj_Shooter.new(@window, @window.player, rand*FRAME_WIDTH, rand(10), method(:dodge_traj))) #if rand(80) == 0
+        @window.ennemies.push(Dodger_Ennemy.new(@window, @window.player, rand*FRAME_WIDTH, rand(10))) #if rand(80) == 0
       end
       #give_bonus
     end
