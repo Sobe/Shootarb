@@ -56,7 +56,7 @@ class Player
     # From death to live again...
     if (!is_alive?) and (Time.now - @last_crash_t > 1.5) and @lives > -1
       # Resurect
-      @x, @y = [400, 500]
+      @x, @y = [FRAME_WIDTH/2, 3.0/4.0*FRAME_HEIGHT]
       @status = :alive
     end
   end
