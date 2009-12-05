@@ -36,7 +36,7 @@ module Trajectory
   
   # Dodging trajectory
   def dodge_traj(obj)
-    vx = 0
+    vx = obj.vx
     # Dodge bullets
     obj.window.bullets.each do |b|
       if (obj.x - obj.width/2 - b.width/2 .. obj.x).include? b.x
