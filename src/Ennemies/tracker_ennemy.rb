@@ -23,6 +23,7 @@ class Tracker_Ennemy < Ennemy_With_Traj
     
     @player = player
     
+    # TODO use class variable instead
     @image = Gosu::Image.new(@window, "media/tracker.bmp", false)
   end
   

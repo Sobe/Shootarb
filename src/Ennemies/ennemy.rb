@@ -7,7 +7,7 @@ include Config
 
 # Abstract class for an ennemy.
 class Ennemy
-  attr_reader :x, :y, :vx, :vy, :score_pts, :width, :height, :window
+  attr_reader :x, :y, :vx, :vy, :score_pts, :width, :height, :window, :hp
   
   def initialize(window, x, y)
     # Parent window and position
@@ -23,6 +23,10 @@ class Ennemy
     # Velocities
     @vx, @vy = 0, 0
     
+    # Health
+    @hp = 10
+    @to_be_removed = false
+    
   end
   
   # Standard update() method.
@@ -31,7 +35,8 @@ class Ennemy
     @y += @vy
     
     # Returns false to be removed if out of frame or crashed on player
-    inside_game_area? and !touch?(@window.player)
+    touch?(@window.player)
+    inside_game_area? and !@to_be_removed
   end
   
   # Standard <b>draw()</b> method.
@@ -55,17 +60,30 @@ class Ennemy
     if player.is_alive? and getCollisionMask.intersects_with?(player.getCollisionMask) 
       player.touched
       crash
-      true
-    else
-      false
     end
   end
   
+  # When destroyed
   def crash
     [@width, @height].max.times do
       p_vx = rand(100)/10.0 - 5
       p_vy = rand(100)/10.0 - 5
       @window.particles << Particle.new(@window, @x + rand(@width) - @width/2, @y + rand(@height) - @height/2, p_vx, p_vy)
+    end
+    @to_be_removed = true
+  end
+  
+  # When touched by a bullet.
+  def touched_by bullet
+    damage bullet.damage
+  end
+  
+  # Take damages
+  def damage d
+    @hp -= d
+    if @hp <= 0
+      crash
+      @window.player.score += @score_pts
     end
   end
   

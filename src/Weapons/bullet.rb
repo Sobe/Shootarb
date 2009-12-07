@@ -7,7 +7,7 @@ include Config
 
 # Player's bullet.
 class Bullet
-  attr_reader :x, :y, :vx, :vy, :width, :height
+  attr_reader :x, :y, :vx, :vy, :width, :height, :damage
   
   def initialize(window, player, x, y, vx=0, vy=7)
     @window, @x, @y = window, x + vx, y + vy
@@ -19,6 +19,9 @@ class Bullet
     
     # Dimensions
     @width, @height = 10, 10
+    
+    # Strenght
+    @damage = 10
   end
   
   def update
@@ -39,14 +42,10 @@ class Bullet
   # Does this bullet touch a guy in 'ennemies'?
   def touch?(ennemies)
     touched = false
-    ennemies.reject! do |e|
+    ennemies.each do |e|
       if e.getCollisionMask.intersects_with?(getCollisionMask)
-        @player.score += e.score_pts
-        e.crash
+        e.touched_by self
         touched = true
-        true
-      else
-        false
       end
     end
     touched

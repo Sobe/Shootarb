@@ -16,6 +16,9 @@ class Bullet_With_Traj < Bullet
     # Dimensions
     @width, @height = 10, 10
     
+    # Damages
+    @damage = 10
+    
     # Traj
     @trajectory = traj
     @creation_t = Time.now
