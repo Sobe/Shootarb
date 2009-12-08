@@ -2,38 +2,49 @@
 = TODO =
 ========
 
-- Derive all "sprite" classes from a common abstract class with x, y, height, width, etc...
-- Test animation on an ennemy
-- Replace .bmp by .png
-- Manage High-Scores
-  -- Ask for name when finished
-  -- Save Name/Date/Level/Score
-  -- Sort by score value
-- Make it possible to relaunch a game when finished or lost
 - More ennemies
   -- Ennemy with several HPs
   -- "Static Shooter" = ][==>[] STOP SHOOT []==>][
   -- Make a boss
+- Test animation on an ennemy
+- Make a command pattern (?) to insert "actions" (e.g: shooting) in ennemies with traj behavior (i.e update() method)
+  
+- Replace .bmp by .png
+
+- Derive all "sprite" classes from a common abstract class with x, y, height, width, etc...
+
+
+- Manage High-Scores
+  -- Ask for name when finished
+  -- Save Name/Date/Level/Score
+  -- Sort by score value
+
 - More weapons
   -- Tracking rockets
+  
+- Externalize management of UI (text dsiplay methods)
 - Use image_from_text() instead of direct text for big messages
   -- Game Over
   -- The End
+  
 - Externalize ctrls in a dedicated class like "PlayerCtrl"
-- Externalize management of UI (text dsiplay methods)
+- Make it possible to relaunch a game when finished or lost
+- Make PAUSE possible (no update if paused => will make bugs with local timers)
+  -- Enhance button sensibility
+  -- Make a 'clock' class and use it whenever a timer is needed instead of Time.now
+
 - Replace player's crash uggly picture by an animation or something (reconstructing particles ?)
-- Wave Generator
-  -- Refactor it
-  -- DSL for this?
-- Make a command pattern (?) to insert "actions" (e.g: shooting) in ennemies with traj behavior (i.e update() method)
 - Crash particles:
   -- Less
   -- Different colors according to the type of ennemy
   -- Limit life of a particle in time
+  
+- Wave Generator
+  -- Refactor it
+  -- DSL for this?
+  
+
+
 - Scrolling background
   -- OpenGL or not needed?
   -- Background elements
-- BUG Score not added when add_weapon() on player (bad access to @score ?)
-- Make PAUSE possible (no update if paused => will make bugs with local timers)
-  -- Enhance button sensibility
-  -- Make a 'clock' class and use it whenever a timer is needed instead of Time.now
