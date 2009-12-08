@@ -31,6 +31,10 @@ class Ponger_Ennemy < Ennemy_With_Traj
     # Dimensions
     @width, @height = 20, 20
     
+    # Score
+    @score_pts = 100
+    
+    # State
     @last_switch_t = Time.now
     @is_red = [true, false][rand(2)]
   end
@@ -47,7 +51,7 @@ class Ponger_Ennemy < Ennemy_With_Traj
   # Bullets bounce on it when red.
   def touched_by bullet
     if @is_red
-      @window.e_bullets <<  Ennemy_Bullet.new(@window, @player, @x, @y, -bullet.vx, -bullet.vy)
+      @window.e_bullets <<  Ennemy_Bullet.new(@window, @player, bullet.x, bullet.y, -bullet.vx, -bullet.vy)
     else
       super(bullet)
     end
