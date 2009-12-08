@@ -82,6 +82,7 @@ class Wave_Generator_Test
       if @window.ennemies.size == 0
         @window.ennemies.push(Ponger_Ennemy.new(@window, @window.player, rand*FRAME_WIDTH, rand(10))) #if rand(80) == 0
       end
+      @window.bonuses.push(@@bonuses[rand(@@bonuses.size)].new(@window, @window.player, rand*FRAME_WIDTH, 0)) if rand(300) == 0
       #give_bonus
     end
   end
