@@ -1,7 +1,8 @@
 #!/usr/bin/env ruby
 
 require 'src/config'
-require 'src/particle'
+require 'src/live_particle'
+require 'src/Ruby_Extension/array'
 
 include Config
 
@@ -12,7 +13,6 @@ class Ennemy
   def initialize(window, x, y)
     # Parent window and position
     @window, @x, @y = window, x, y
-    
     
     # Dimensions
     @width, @height = 0, 0
@@ -26,6 +26,9 @@ class Ennemy
     # Health
     @hp = 10
     @to_be_removed = false
+    
+    # Colors
+    @colors = [0xffdd0000, 0xff780000, 0xffbc7373]
     
   end
   
@@ -68,7 +71,8 @@ class Ennemy
     [@width, @height].max.times do
       p_vx = rand(100)/10.0 - 5
       p_vy = rand(100)/10.0 - 5
-      @window.particles << Particle.new(@window, @x + rand(@width) - @width/2, @y + rand(@height) - @height/2, p_vx, p_vy)
+      #@window.particles << Particle.new(@window, @x + rand(@width) - @width/2, @y + rand(@height) - @height/2, p_vx, p_vy)
+      @window.particles << Live_Particle.new(@window, @x + rand(@width) - @width/2, @y + rand(@height) - @height/2, p_vx, p_vy, @colors.rand_in, 1 + rand)
     end
     @to_be_removed = true
   end

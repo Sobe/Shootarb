@@ -10,7 +10,8 @@ class Simple_Shooter < Ennemy
     super(window, x, y)
     
     # Dimensions
-    @width, @height = 50, 50  
+    @width, @height = 50, 50
+    
     # Score value
     @score_pts = 50
     
@@ -27,8 +28,6 @@ class Simple_Shooter < Ennemy
   end
   
   def update
-    @x += @vx
-    @y += @vy
     
     # TODO puts all these middle things of update in "actions[method1, method2...]"
     if Time.now - @last_shoot > 1.3
@@ -37,7 +36,7 @@ class Simple_Shooter < Ennemy
     end
     
     # Returns false to be removed if out of frame or crashed on player
-    inside_game_area? and !touch?(@window.player)
+    super
   end
   
   def shoot

@@ -25,6 +25,7 @@ class Tracker_Ennemy < Ennemy_With_Traj
     
     # TODO use class variable instead
     @image = Gosu::Image.new(@window, "media/tracker.bmp", false)
+    @colors = [0xff780000, 0xff4f4242]
   end
   
 end

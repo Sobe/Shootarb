@@ -20,7 +20,9 @@ class Dummy_Ennemy < Ennemy
     @vx = 0 
     @vy = 3
     
+    # Graphics
     @image = Gosu::Image.new(@window, "media/blue_dumb.png", false)
+    @colors = [0xff216363, 0xff326b91, 0xff83c1ea]
   end
   
 end
