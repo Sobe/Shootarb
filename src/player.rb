@@ -54,19 +54,32 @@ class Player
   # Standard update method.
   def update
     # From death to live again...
-    if (!is_alive?) and (Time.now - @last_crash_t > 1.5) and @lives > -1
-      # Resurect
-      @x, @y = [FRAME_WIDTH/2, 3.0/4.0*FRAME_HEIGHT]
+    if (@status == :crashed) and (Time.now - @last_crash_t > 1.5) and @lives > -1
+      resurrect
+    end
+    
+    # From resurrection to real life
+    if (@status == :resurrecting) and (Time.now - @last_crash_t > 3.5)
       @status = :alive
     end
   end
   
+  # Resurrect player.
+  def resurrect
+    @status = :resurrecting
+    @x, @y = [FRAME_WIDTH/2, 4.0/5.0*FRAME_HEIGHT]
+    @weapons = [Standard_Weapon.new(@window, self)]
+  end
+  
+  # Standard draw() method according to current state.
   def draw
     case @status
     when :alive
       @normal_image.draw(@x - @normal_image.width / 2, @y - @normal_image.height / 2, ZOrder::Player)
     when :crashed
       @crash_image.draw(@x - @crash_image.width / 2, @y - @crash_image.height / 2, ZOrder::Player)
+    when :resurrecting
+      @normal_image.draw(@x - @normal_image.width / 2, @y - @normal_image.height / 2, ZOrder::Player) if (Time.now.to_f * 1000).to_i % 2 == 0
     end
   end
   
@@ -78,10 +91,10 @@ class Player
   
   # Called when player is touched by an <b>Ennemy_Bullet</b>.
   def touched
-    #@hp -= 1
     crash
   end
   
+  # Die, lose one life, this kind of things...
   def crash
     @status = :crashed
     @lives -= 1
@@ -93,8 +106,14 @@ class Player
     Circle.new(@x, @y, [@width, @height].max/2.0)
   end
   
+  # Is player alive?
   def is_alive?
     @status == :alive
+  end
+  
+  # Is player resurrecting?
+  def resurrecting?
+    @status == :resurrecting
   end
   
   # Add one up.

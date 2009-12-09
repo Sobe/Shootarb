@@ -43,7 +43,7 @@ class GameWindow < Gosu::Window
     @particles = []
     
     # Launch player
-    @player = Player.new(self, FRAME_WIDTH/2, 3.0/4.0*FRAME_HEIGHT)
+    @player = Player.new(self, FRAME_WIDTH/2, 4.0/5.0*FRAME_HEIGHT)
     
     # Create Waves generator
     if testmode
@@ -78,7 +78,7 @@ class GameWindow < Gosu::Window
     unless @state == :paused
       # Update player
       # TODO externalize this part PlayerCtrl
-      if @player.status == :alive
+      if @player.is_alive? or @player.resurrecting?
         @player.move_left if button_down? Gosu::Button::KbLeft or button_down? Gosu::Button::GpLeft
         @player.move_right if button_down? Gosu::Button::KbRight or button_down? Gosu::Button::GpRight
         @player.accelerate if button_down? Gosu::Button::KbUp or button_down? Gosu::Button::GpUp
