@@ -13,7 +13,6 @@
 
 - Derive all "sprite" classes from a common abstract class with x, y, height, width, etc...
 
-
 - Manage High-Scores
   -- Ask for name when finished
   -- Save Name/Date/Level/Score
@@ -35,15 +34,11 @@
 
 - Replace player's crash uggly picture by an animation or something (reconstructing particles ?)
 - Crash particles:
-  -- Less
-  -- Different colors according to the type of ennemy
-  -- Limit life of a particle in time
+  -- Less (?)
   
 - Wave Generator
   -- Refactor it
   -- DSL for this?
-  
-
 
 - Scrolling background
   -- OpenGL or not needed?
