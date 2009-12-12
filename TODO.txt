@@ -29,7 +29,6 @@
 - Externalize ctrls in a dedicated class like "PlayerCtrl"
 - Make it possible to relaunch a game when finished or lost
 - Make PAUSE possible (no update if paused => will make bugs with local timers)
-  -- Enhance button sensibility
   -- Make a 'clock' class and use it whenever a timer is needed instead of Time.now
 
 - Replace player's crash uggly picture by an animation or something (reconstructing particles ?)
