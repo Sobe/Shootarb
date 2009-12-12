@@ -70,11 +70,6 @@ class GameWindow < Gosu::Window
   # Override standard <b>update()</b> method.
   def update
     
-    # 'P' for pause
-    if button_down? Gosu::Button::KbP
-      @state = (@state == :paused)? :in_game : :paused
-    end
-    
     unless @state == :paused
       # Update player
       # TODO externalize this part PlayerCtrl
@@ -157,4 +152,13 @@ class GameWindow < Gosu::Window
       close
     end
   end
+  
+  # Behavior when a button is released.
+  def button_up(id)
+    # 'P' for pause
+    if id == Gosu::Button::KbP
+      @state = (@state == :paused)? :in_game : :paused
+    end
+  end
+  
 end
