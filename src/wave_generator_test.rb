@@ -8,6 +8,7 @@ require 'src/Ennemies/traj_shooter'
 require 'src/Ennemies/tracker_ennemy'
 require 'src/Ennemies/dodger_ennemy'
 require 'src/Ennemies/ponger_ennemy'
+require 'src/Ennemies/tank_shooter'
 
 require 'src/Weapons/life_bonus'
 require 'src/Weapons/dw_bonus'
@@ -75,14 +76,23 @@ class Wave_Generator_Test
   def update_level_1
     if Time.now - @level_beg_t > @pause_at_beg
       #@window.ennemies.push(Dummy_Ennemy.new(@window, rand*FRAME_WIDTH, 0)) if rand(80) == 0
+      
       #@window.ennemies.push(Tracker_Ennemy.new(@window, @window.player, rand*FRAME_WIDTH, 0)) if rand(80) == 0
+      
       #if @window.ennemies.size == 0
       #  @window.ennemies.push(Dodger_Ennemy.new(@window, @window.player, rand*FRAME_WIDTH, rand(10))) #if rand(80) == 0
       #end
+      
+      #if @window.ennemies.size == 0
+      #  @window.ennemies.push(Ponger_Ennemy.new(@window, @window.player, rand*FRAME_WIDTH, rand(10))) #if rand(80) == 0
+      #end
+      
       if @window.ennemies.size == 0
-        @window.ennemies.push(Ponger_Ennemy.new(@window, @window.player, rand*FRAME_WIDTH, rand(10))) #if rand(80) == 0
+        @window.ennemies.push(Tank_Shooter.new(@window, @window.player, rand*FRAME_WIDTH, rand(10)))
       end
+      
       @window.bonuses.push(@@bonuses[rand(@@bonuses.size)].new(@window, @window.player, rand*FRAME_WIDTH, 0)) if rand(300) == 0
+      
       #give_bonus
     end
   end
