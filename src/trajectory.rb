@@ -17,8 +17,12 @@ module Trajectory
   
   # Trajectory following player with a velocity of 1.
   def tracking_traj(obj)
-    vx = (obj.player.x - obj.x) / pts_distance([obj.player.x, obj.player.y], [obj.x, obj.y])
-    vy = (obj.player.y - obj.y) / pts_distance([obj.player.x, obj.player.y], [obj.x, obj.y])
+    if obj.player.is_alive?
+      vx = (obj.player.x - obj.x) / pts_distance([obj.player.x, obj.player.y], [obj.x, obj.y])
+      vy = (obj.player.y - obj.y) / pts_distance([obj.player.x, obj.player.y], [obj.x, obj.y])
+    else
+      vx, vy = obj.vx, obj.vy
+    end
     [vx, vy]
   end
   
@@ -55,6 +59,24 @@ module Trajectory
     end
       
     [vx, (obj.y > 100)? 0 : 1]
+  end
+  
+  # Trajectory with these steps:
+  #  - move forward
+  #  - fix
+  #  - go back
+  def move_stop_go_back(obj)
+    if obj.y < 150
+      vy = 2
+    else
+      vy = 0
+    end
+    
+    if Time.now - obj.creation_t > 6
+      vy = -2
+    end
+    
+    [0, vy]
   end
   
 end
