@@ -31,8 +31,8 @@ class Ennemy_Bullet
   
   def draw
     # Just draw a small quad.
-    @window.draw_quad(x-5, y-5, 0xffffff00, x+5, y-5, 0xffffff00, 
-      x-5, y+5, 0xffffff00, x+5, y+5, 0xffffff00, 0)
+    @window.draw_quad(x-5, y-5, 0xffff0000, x+5, y-5, 0xffff0000, 
+      x-5, y+5, 0xffff0000, x+5, y+5, 0xffff0000, 0)
   end
   
   # Does this bullet touch the player?
