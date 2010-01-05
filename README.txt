@@ -24,7 +24,7 @@ You just need:
 ------------
 
 - 'Arrow keys' to move
-- 'Z' to shoot ('W' on AZERTY keyboards)
+- 'Z' to shoot ('W' on AZERTY keyboards...)
 - 'P' for pause (buggy now...)
 - 'ESC' to exit
 
